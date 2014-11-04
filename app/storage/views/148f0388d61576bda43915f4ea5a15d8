@@ -1,0 +1,35 @@
+
+
+<?php $__env->startSection('contents'); ?>
+<h1>Upload Excel</h1>
+
+<!-- will be used to show any messages -->
+<?php if (Session::has('msg') ): ?>
+   <div class="alert alert-info alert-dismissable">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+   <p><strong>Success! </strong><br><?php echo Session::get('msg'); ?></p>
+   </div>
+<?php endif; ?>
+
+
+<?php if($errors->any()): ?>
+    <div class="alert alert-danger alert-dismissable">
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+       <p><strong>Oh snap! </strong><?php echo implode('',$errors->all('<br> :message ')); ?></p> 
+    </div>
+<?php endif; ?>
+
+
+
+<form role="form"  method="post" action="/postexcel" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="file">Excel File</label>
+    <input type="file" class="form-control" id="file" name="file" >
+  </div>
+ 
+<?php echo Form::token(); ?>
+  <button type="submit" class="btn btn-success">Upload</button>
+</form>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.docs', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

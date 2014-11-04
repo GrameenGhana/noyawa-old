@@ -75,7 +75,7 @@ input[type="button"]
 	display: inline-block;
 	padding: 10px 20px;
 	margin-bottom: 1.5em;
-	color: #ffffff!important;
+	/** color: #ffffff!important; **/
 	text-decoration: none;
 	position: relative;
 	cursor: pointer;
@@ -91,8 +91,8 @@ input[type="reset"]:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover 
 {
-  	background: #aaaaaa;
-	color: #ffffff;
+  	/** background: #aaaaaa;
+	color: #ffffff;**/
 }
 
 input[type="text"], 

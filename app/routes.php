@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -11,44 +12,7 @@
 |
 */
 
-/**
- * Markdown Function...
- */
-function markdown($value)
-{
-	return with(new dflydev\markdown\MarkdownExtraParser)->transformMarkdown($value);
-}
 
-/**
- * Let query string by used to force version...
- */
-if (isset($_GET['v']))
-{
-	Cookie::queue('docs_versions', $_GET['v']);
-}
-
-/**
- * Set Docs Cookie If Not Set...
- */
-if ( ! Cookie::has('docs_version'))
-{
-	Cookie::queue('docs_versions', '4.2');
-}
-
-/**
- * Define Current Docs Version Constant
- */
-if ( ! defined('DOCS_VERSION'))
-{
-	$version = Cookie::get('docs_version', '4.2');
-
-	if (Input::query('version') and in_array(Input::query('version'), array('4.0', '4.1', '4.2', 'master')))
-	{
-		$version = Input::query('version');
-	}
-
-	define('DOCS_VERSION', $version);
-}
 
 /**
  * Catch A 404 On Docs...
@@ -64,67 +28,55 @@ App::missing(function($e)
 /**
  * Main Route...
  */
-Route::get('/', function()
+Route::get('/noyawa', function()
 {
 	return View::make('index');
 });
 
-/**
- * Documentation Routes...
- */
-Route::get('docs/dev', function()
-{
-	Cookie::queue('docs_version', 'master', 525600);
 
-	return Redirect::back();
-});
-
-Route::get('docs/4-0', function()
-{
-	Cookie::queue('docs_version', '4.0', 525600);
-
-	return Redirect::back();
-});
-
-Route::get('docs/4-1', function()
-{
-	Cookie::queue('docs_version', '4.1', 525600);
-
-	return Redirect::back();
-});
-
-Route::get('docs/4-2', function()
-{
-	Cookie::queue('docs_version', '4.2', 525600);
-
-	return Redirect::back();
-});
+Route::resource('clients', 'ClientController');
 
 /**
- * Main Documentation Route...
+ * Route to create a new client
  */
-Route::get('docs/{page?}', function($page = null)
+Route::post('noyawa/postClient', 'ClientController@postClient');
+
+/**
+ * Register Route...
+ */
+Route::get('/unsubscribe',function()
 {
-	if (is_null($page)) $page = 'introduction';
-
-	$index = Cache::remember('docs.'.DOCS_VERSION.'.index', 5, function()
-	{
-		return markdown(file_get_contents(base_path().'/docs/'.DOCS_VERSION.'/documentation.md'));
-	});
-
-	$contents = Cache::remember('docs.'.DOCS_VERSION.'.'.$page, 5, function() use ($page)
-	{
-		if (file_exists($path = base_path().'/docs/'.DOCS_VERSION.'/'.$page.'.md'))
-		{
-			return markdown(file_get_contents($path));
-		}
-		else
-		{
-			return 'Not Found';
-		}
-	});
-
-	if ($contents == 'Not Found') return Redirect::to('docs');
-
-	return View::make('layouts.docs', compact('index', 'contents'));
+ return View::make('unsubscribe');
 });
+
+Route::get('/register', function()
+{
+	return View::make('register');
+});
+
+Route::get('/viewuploads', function()
+{
+	return View::make('viewuploads');
+});
+
+Route::get('/viewclients', function()
+{
+	return View::make('viewclients');
+});
+
+ Route::get('/getuploads', array('as'=>'getuploads', 'uses'=>'UploadController@getData'));
+ Route::get('/getclients', array('as'=>'getclients', 'uses'=>'ClientController@getData'));
+
+/**
+ * Register Route...
+ */
+Route::get('/excelupload', function()
+{
+	return View::make('excelupload');
+});
+
+/**
+ * Route to upload excel
+ */
+Route::post('noyawa/postexcel', 'UploadController@uploadExcel');
+Route::controller('/users','UserController');

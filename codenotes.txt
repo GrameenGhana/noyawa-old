@@ -1,0 +1,154 @@
+/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function postUpload()
+	{
+           Log::info("Accessing postUpload @ UploadController");
+          
+        $file = Input::file('file'); // your file upload input field in the form should be named 'file'
+
+        $destinationPath = 'uploads/';
+        $filename = $file->getClientOriginalName();
+        $extension =$file->getClientOriginalExtension(); //if you need extension of the file
+        $uploadSuccess = Input::file('file')->move($destinationPath, $filename);
+         
+
+        if( $uploadSuccess ) {
+           //return Response::json('success', 200); // or do a redirect with some message that file was uploaded
+           
+           if(is_readable('uploads/'.$filename)) {
+           //Excel::load('uploads/'.$filename, function($reader) {
+
+           // Getting all results
+           //$results = $reader->get();
+
+           try {
+    $inputFileType = PHPExcel_IOFactory::identify('uploads/'.$filename);
+    $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+    
+    $objPHPExcel = $objReader->load('uploads/'.$filename);
+} catch (Exception $e) {
+    die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+}
+
+
+
+$rowIterator = $objPHPExcel->getActiveSheet()->getRowIterator();
+$array_data = array();
+foreach ($rowIterator as $row) {
+     
+    $cellIterator = $row->getCellIterator();
+    $cellIterator->setIterateOnlyExistingCells(false);
+    $rowIndex = $row->getRowIndex();
+    $array_data[$rowIndex] = array('A' => '', 'B' => '', 'C' => '', 'D' => '', 'E' => '');
+
+
+    foreach ($cellIterator as $cell) {
+        if ('A' == $cell->getColumn()) {
+            $array_data[$rowIndex][$cell->getColumn()] = $cell->getValue();
+        } else if ('B' == $cell->getColumn()) {
+            $array_data[$rowIndex][$cell->getColumn()] = $cell->getValue();
+        } else if ('C' == $cell->getColumn()) {
+            $array_data[$rowIndex][$cell->getColumn()] = $cell->getValue();
+        } else if ('D' == $cell->getColumn()) {
+            $array_data[$rowIndex][$cell->getColumn()] = $cell->getValue();
+        } else if ('E' == $cell->getColumn()) {
+            $array_data[$rowIndex][$cell->getColumn()] = $cell->getValue();
+        } 
+
+        
+    }
+
+
+
+}
+
+echo 'First Column ->' .$array_data[1]['A'];
+
+print_r($array_data);
+
+
+           //return Response::json(array('message' => 'Process it....') );
+
+          //})->get();
+       }else{
+           return Response::json(array('message' => 'Error loading file , check permissions on file'));
+
+       }
+
+        } else {
+           return Response::json('error', 400);
+        }
+
+/**
+         if($validation -> passes()) {
+
+
+          $number = $input['client_number'];
+          $country_code = '233';
+
+          $new_number = substr_replace($number, $country_code, 0, ($number[0] == '0'));
+
+
+            $client = new Client;
+            $client->client_number  = $new_number;
+            $client->client_gender  = $input['client_gender'];
+            $client->client_age     = $input['client_age'];
+            $client->client_education_level  = $input['client_educational_level'];
+            $client->status = 'Completed';
+
+            
+
+            if($client->save()){
+
+
+               // Get cURL resource
+$curl = curl_init();
+// Set some options - we are passing in a useragent too here
+curl_setopt_array($curl, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'http://41.191.245.72:8080/noyawa/fireToCouchDb1',
+    CURLOPT_POST => 1,
+    CURLOPT_POSTFIELDS => array(
+        phone => $client->client_number,
+        all => 'n'
+    )
+));
+// Send the request & save response to $resp
+$resp = curl_exec($curl);
+// Close request to clear up some resources
+curl_close($curl);
+           
+
+                Session::flash('msg' ,'Client ['. $client->client_number .'] successfully saved !');
+
+                 return Redirect::back();
+            }
+         }else{
+
+              return Redirect::back()
+                     ->withInput()
+                     ->withErrors($validation)
+                     ->with('message', 'There were validation errors.');
+         }
+            
+**/
+            
+	}
+
+    
+
+}
+
+class SampleReadFilter implements PHPExcel_Reader_IReadFilter {
+    public function readCell($column, $row, $worksheetName = '') {
+        // Read rows 1 to 10 and columns A to C only
+        if ($row > 1) {
+           if (in_array($column,range('A','E'))) {
+             return true;
+           }
+        }
+        return false;
+    }

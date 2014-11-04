@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -65,7 +65,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => 'HBpjqkjBaRRpLtJ95TGlVHk5fQgHcb0P',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -113,6 +113,9 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
+            
+                 /* Additional Providers */
+                 'Bllim\Datatables\DatatablesServiceProvider',
 
 	),
 
@@ -178,6 +181,9 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
+            
+                  /* Additional Aliases */
+                'Datatables'      => 'Bllim\Datatables\Datatables',
 
 	),
 

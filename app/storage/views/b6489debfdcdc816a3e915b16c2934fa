@@ -1,0 +1,70 @@
+
+
+<?php $__env->startSection('contents'); ?>
+<h1>Register Client</h1>
+
+<!-- will be used to show any messages -->
+<?php if (Session::has('msg') ): ?>
+   <div class="alert alert-info alert-dismissable">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+   <p><strong>Success! </strong><br><?php echo Session::get('msg'); ?></p>
+   </div>
+<?php endif; ?>
+
+
+<?php if($errors->any()): ?>
+    <div class="alert alert-danger alert-dismissable">
+     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+       <p><strong>Oh snap! </strong><?php echo implode('',$errors->all('<br> :message ')); ?> </p>
+    </div>
+<?php endif; ?>
+
+<form role="form"  method="post" action="/postClient" autocomplete="on">
+  <div class="form-group">
+    <label for="client_number">Phone Number</label>
+    <input type="phone" class="form-control" id="client_number" name="client_number" placeholder="eg. 233xxxxxxxx">
+  </div>
+  <div class="form-group">
+    <label for="client_age">Age</label>
+    <select class="form-control" id="client_age" name="client_age">
+  <option value="">Select Age</option>
+  <option value="15">15</option>
+  <option value="16">16</option>
+  <option value="17">17</option>
+  <option value="18">18</option>
+  <option value="19">19</option>
+  <option value="20">20</option>
+  <option value="21">21</option>
+  <option value="22">22</option>
+  <option value="23">23</option>
+  <option value="24">24</option>
+
+  </select>
+   
+  </div>
+  
+  <div class="form-group">
+  <label for="client_gender">Gender</label>
+  <select class="form-control" name="client_gender">
+  <option value="">Select Gender</option>
+  <option value="F">Female</option>
+  <option value="M">Male</option>
+  </select>
+  </div>
+
+   <div class="form-group">
+  <label for="client_educational_level">Educational Level</label>
+  <select class="form-control" name="client_educational_level">
+  <option value="">Select Level</option>
+  <option value="jhs">JHS</option>
+  <option value="shs">SHS</option>
+  <option value="ter">TERTIARY</option>
+  <option value="n/a">N/A</option>
+  </select>
+  </div>
+
+  <button type="submit" class="btn btn-success">Submit</button>
+</form>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.docs', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

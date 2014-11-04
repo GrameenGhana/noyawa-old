@@ -1,0 +1,36 @@
+
+<?php $__env->startSection('content'); ?>
+<!-- header -->
+<header id="header" role="header">
+    <div class="boxed">
+        <!-- tagline -->
+        <div id="tagline" class="animated bounceInUp">
+            <h1>No Yawa  Service</h1>
+            <h2>Say No Yawa  & We Dey 4 U.</h2>
+        </div>
+        <!-- /tagline -->
+
+        <!-- callto action -->
+        <div id="callto" class="animated bounceInLeft">
+            <a href="/register" class="button large animated shake">Register Client</a>
+            <a href="/excelupload" class="button large animated shake">Upload Excel</a>
+            <a href="/viewclients" class="button large animated shake">View All Clients</a>
+            <a href="/viewuploads" class="button large animated shake">View All Uploads</a>
+        </div>
+        <!-- /callto action -->
+
+    </div>
+</header>
+<!-- /header -->
+
+
+
+<!-- to the top -->
+<div id="top">
+    <a href="#index" title="Back to the top">
+        <i class="icon-chevron-up"></i>
+    </a>
+</div>
+<!-- /to the top -->
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

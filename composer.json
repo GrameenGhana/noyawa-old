@@ -5,7 +5,9 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.0.*",
-		"dflydev/markdown": "1.0.*"
+		"dflydev/markdown": "1.0.*",
+		"phpoffice/phpexcel": "dev-master",
+                "bllim/datatables": "*"
 	},
 	"autoload": {
 		"classmap": [

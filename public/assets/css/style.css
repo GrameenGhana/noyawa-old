@@ -1,11 +1,10 @@
-@import url('plugins.css');
+
 @import url('workless.css');
 @import url('typography.css');
 @import url('forms.css');
 @import url('tables.css');
 @import url('buttons.css');
 @import url('backgrounds.css');
-@import url('alerts.css');
 @import url('pagination.css');
 @import url('breadcrumbs.css');
 @import url('font.css');
@@ -14,3 +13,8 @@
 @import url('print.css');
 @import url('animation.css');
 @import url('application.css');
+
+.form-signup, .form-signin {
+    width: 400px;
+    margin: 0 auto;
+}
